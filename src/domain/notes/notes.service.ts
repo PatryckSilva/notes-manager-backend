@@ -15,7 +15,7 @@ export class NotesService {
   private errorHandlerService: ErrorHandlerService;
 
   async createNote(user: UserTypes, props: CreateNoteDto) {
-    const { content, title } = props;
+    const { content, title, folderId } = props;
 
     if (!content || !title) {
       this.errorHandlerService.dispatch({
@@ -37,9 +37,13 @@ export class NotesService {
       findingUsersFolders.find((folder) => folder.name === 'Todas as Notas')
         ?.id || '';
 
+    const findingFolderById = folderId
+      ? await this.foldersRepository.findFolderById(folderId)
+      : undefined;
+
     let createdNote;
 
-    if (!findingAllNotesFolderId) {
+    if (!findingAllNotesFolderId || !findingFolderById) {
       createdNote = await this.notesRepository.createNote({
         title,
         content,
@@ -59,13 +63,32 @@ export class NotesService {
           },
         },
       });
-    } else {
+    }
+
+    if (findingAllNotesFolderId && !findingFolderById) {
       createdNote = await this.notesRepository.createNote({
         title,
         content,
         Folder: {
           connect: {
             id: findingAllNotesFolderId,
+          },
+        },
+        user: {
+          connect: {
+            ...user,
+          },
+        },
+      });
+    }
+
+    if (findingFolderById) {
+      createdNote = await this.notesRepository.createNote({
+        title,
+        content,
+        Folder: {
+          connect: {
+            id: folderId,
           },
         },
         user: {
