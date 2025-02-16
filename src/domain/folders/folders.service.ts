@@ -12,6 +12,12 @@ export class FoldersService {
   private errorHandlerService: ErrorHandlerService;
 
   async findUserFolders(userId: string) {
+    if (!userId) {
+      this.errorHandlerService.dispatch({
+        message: 'Id do usuário é obrigatório',
+        status: StatusCodes.BAD_REQUEST,
+      });
+    }
     const folders =
       await this.foldersRepository.findUserFoldersByUserId(userId);
 
@@ -23,6 +29,33 @@ export class FoldersService {
     }
 
     return folders;
+  }
+
+  async findFolderById(userId: string, folderId: string) {
+    if (!userId) {
+      this.errorHandlerService.dispatch({
+        message: 'Id do usuário é obrigatório',
+        status: StatusCodes.BAD_REQUEST,
+      });
+    }
+
+    if (!folderId) {
+      this.errorHandlerService.dispatch({
+        message: 'Id da pasta é obrigatório',
+        status: StatusCodes.BAD_REQUEST,
+      });
+    }
+
+    const folder = await this.foldersRepository.findFolderById(folderId);
+
+    if (!folder) {
+      this.errorHandlerService.dispatch({
+        message: 'Pasta não encontrada',
+        status: StatusCodes.NOT_FOUND,
+      });
+    }
+
+    return folder;
   }
 
   async createFolder(user: UserTypes, props: CreateFolderDto) {

@@ -44,6 +44,30 @@ export class FoldersController {
     }
   }
 
+  @Get('/by-id/:id')
+  @HttpCode(StatusCodes.OK)
+  @UseGuards(JwtAuthGuard)
+  async getFolderById(
+    @Req() request: AuthenticatedRequest,
+    @Param('id') id: string,
+    @Res() res,
+  ) {
+    try {
+      const user = request.user;
+      const folder = await this.foldersService.findFolderById(user.id, id);
+
+      res.status(StatusCodes.OK).send(folder);
+    } catch (error) {
+      throw new HttpException(
+        {
+          statusCode: error.status || 500,
+          message: error.message,
+        },
+        error.status || 500,
+      );
+    }
+  }
+
   @Post('create')
   @HttpCode(StatusCodes.CREATED)
   @UseGuards(JwtAuthGuard)
