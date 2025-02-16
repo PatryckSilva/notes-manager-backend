@@ -1,0 +1,35 @@
+POST http://localhost:3333/api/v1/accounts/create
+Content-Type: application/json
+
+{
+  "name": "Wesley Ara",
+  "email": "wesleyara@teste.com",
+  "password": "12345678"
+}
+
+###
+
+POST http://localhost:3333/api/v1/accounts/login
+Content-Type: application/json
+
+{
+  "email": "wesleyara@teste.com",
+  "password": "12345678"
+}
+
+###
+
+GET http://localhost:3333/api/v1/accounts 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtMnBqeDF2bzAwMDA5MXAyejF1cTRldDIiLCJpYXQiOjE3Mjk5MTAyODgsImV4cCI6MTcyOTk5NjY4OH0.17QwXRhAL1Vgzg3HEoqbQRsaHSPUiSb7RGQ3tVA1dCw
+
+###
+
+POST http://localhost:3333/api/v1/transactions/create 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtMnBqeDF2bzAwMDA5MXAyejF1cTRldDIiLCJpYXQiOjE3Mjk5MTAyODgsImV4cCI6MTcyOTk5NjY4OH0.17QwXRhAL1Vgzg3HEoqbQRsaHSPUiSb7RGQ3tVA1dCw
+Content-Type: application/json
+
+{
+  "name": "Teste",
+  "value": 100,
+  "date": "2021-08-25"
+}
