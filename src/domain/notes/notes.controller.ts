@@ -133,9 +133,10 @@ export class NotesController {
   ) {
     try {
       const user = request.user;
-      await this.notesService.deleteNoteById(user, noteId);
+      console.log(`noteId`, noteId);
+      const response = await this.notesService.deleteNoteById(user, noteId);
 
-      res.status(StatusCodes.NOCONTENT);
+      res.status(StatusCodes.OK).send(response);
     } catch (error) {
       throw new HttpException(
         {
