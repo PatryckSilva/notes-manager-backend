@@ -17,13 +17,6 @@ export class NotesService {
   async createNote(user: UserTypes, props: CreateNoteDto) {
     const { content, title, folderId } = props;
 
-    if (!content || !title) {
-      this.errorHandlerService.dispatch({
-        message: 'Conteúdo e Título são obrigatórios',
-        status: StatusCodes.BAD_REQUEST,
-      });
-    }
-
     if (!user) {
       this.errorHandlerService.dispatch({
         message: 'Usuário deslogado',

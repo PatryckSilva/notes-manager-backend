@@ -133,7 +133,6 @@ export class NotesController {
   ) {
     try {
       const user = request.user;
-      console.log(`noteId`, noteId);
       const response = await this.notesService.deleteNoteById(user, noteId);
 
       res.status(StatusCodes.OK).send(response);
