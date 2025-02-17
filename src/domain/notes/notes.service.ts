@@ -28,7 +28,7 @@ export class NotesService {
 
     const findingAllNotesFolderId =
       findingUsersFolders.find((folder) => folder.name === 'Todas as Notas')
-        ?.id || '';
+        ?.id || undefined;
 
     const findingFolderById = folderId
       ? await this.foldersRepository.findFolderById(folderId)
@@ -36,18 +36,14 @@ export class NotesService {
 
     let createdNote;
 
-    if (!findingAllNotesFolderId || !findingFolderById) {
+    if (!findingAllNotesFolderId && !findingFolderById) {
       createdNote = await this.notesRepository.createNote({
         title,
         content,
         Folder: {
           create: {
             name: 'Todas as Notas',
-            user: {
-              connect: {
-                ...user,
-              },
-            },
+            userId: user.id,
           },
         },
         user: {
