@@ -77,8 +77,11 @@ export class FoldersController {
     @Res() res,
   ) {
     const user = request.user;
+    const firstKey = Object.keys(data)[0];
+
+    const body = JSON.parse(firstKey);
     try {
-      const createdFolder = await this.foldersService.createFolder(user, data);
+      const createdFolder = await this.foldersService.createFolder(user, body);
 
       res
         .status(StatusCodes.CREATED)

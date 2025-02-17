@@ -73,12 +73,14 @@ export class NotesController {
   @UseGuards(JwtAuthGuard)
   async createNote(
     @Req() request: AuthenticatedRequest,
-    @Body() body: CreateNoteDto,
+    @Body() data: CreateNoteDto,
     @Res() res,
   ) {
     try {
       const user = request.user;
+      const firstKey = Object.keys(data)[0];
 
+      const body = JSON.parse(firstKey);
       const response = await this.notesService.createNote(user, body);
 
       res.status(StatusCodes.CREATED).send(response);
