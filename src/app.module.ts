@@ -19,7 +19,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       useFactory: async (configService: ConfigService) => {
         return {
           store: redisStore as any,
-          url: configService.get('database.redis.url'),
+          url: process.env.REDIS_URL,
           ttl: 120,
         };
       },
