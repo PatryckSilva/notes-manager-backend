@@ -5,7 +5,8 @@ import { CreateNoteDto, UpdateNoteDto } from './dto/note.dto';
 import { UserTypes } from '../users/interface/users.interface';
 import { StatusCodes } from 'src/infra/error-handler/error-handler.interface';
 import { FoldersRepository } from '../folders/folders.repository';
-
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 export class NotesService {
   @Inject(FoldersRepository)
   private foldersRepository: FoldersRepository;
@@ -13,6 +14,7 @@ export class NotesService {
   private notesRepository: NotesRepository;
   @Inject(ErrorHandlerService)
   private errorHandlerService: ErrorHandlerService;
+  @Inject(CACHE_MANAGER) private cacheService: Cache;
 
   async createNote(user: UserTypes, props: CreateNoteDto) {
     const { content, title, folderId } = props;
@@ -94,6 +96,11 @@ export class NotesService {
         status: StatusCodes.INTERNAL_SERVER_ERROR,
       });
     }
+
+    const findingAllUserNotes =
+      await this.notesRepository.findUserNotesByUserId(user.id);
+
+    await this.cacheService.set('allNotes', findingAllUserNotes, 60);
 
     return createdNote;
   }
