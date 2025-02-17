@@ -107,11 +107,14 @@ export class FoldersController {
     @Res() res,
   ) {
     const user = request.user;
+    const firstKey = Object.keys(data)[0];
+
+    const body = JSON.parse(firstKey);
     try {
       const folder = await this.foldersService.updateFolder({
         user,
         folderId: id,
-        props: data,
+        props: body,
       });
 
       res

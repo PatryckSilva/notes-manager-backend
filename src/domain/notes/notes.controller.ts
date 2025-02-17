@@ -101,11 +101,15 @@ export class NotesController {
   async updateNote(
     @Req() request: AuthenticatedRequest,
     @Param('noteId') noteId: string,
-    @Body() body: UpdateNoteDto,
+    @Body() data: UpdateNoteDto,
     @Res() res,
   ) {
     try {
       const user = request.user;
+
+      const firstKey = Object.keys(data)[0];
+
+      const body = JSON.parse(firstKey);
 
       const response = await this.notesService.updateNoteById({
         noteId,
