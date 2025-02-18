@@ -76,6 +76,7 @@ export class UsersController {
   @ApiBody({ required: true, type: CreateUserDtoClass })
   async createUser(@Body() data: CreateUserDto, @Res() res) {
     try {
+      console.log(`data`, data);
       const response = await this.usersService.createUser(data);
 
       res.status(StatusCodes.CREATED).send(response);
