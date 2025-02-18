@@ -19,19 +19,6 @@ services:
     volumes:
       - redis_data:/data
 
-  # api:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   container_name: api-concert
-  #   environment:
-  #     DATABASE_URL: postgresql://admin:admin@postgres:5432/defaultdb
-  #   depends_on:
-  #     - postgres
-  #   ports:
-  #     - '5000:5000'
-  #   command: sh -c "npx prisma migrate dev && node dist/main.js"
-
 volumes:
   postgres_data:
   redis_data:
