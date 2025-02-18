@@ -23,7 +23,7 @@ import {
 } from './dto/folders.dto';
 import { AuthenticatedRequest } from '../users/interface/users.interface';
 import { StatusCodes } from 'src/infra/error-handler/error-handler.interface';
-import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 
 @Controller('folders')
 export class FoldersController {
@@ -33,6 +33,7 @@ export class FoldersController {
   @Get('')
   @HttpCode(StatusCodes.OK)
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiTags('Folders')
   async getUserFolders(@Req() request: AuthenticatedRequest, @Res() res) {
     try {
@@ -54,6 +55,7 @@ export class FoldersController {
   @Get('/by-id/:id')
   @HttpCode(StatusCodes.OK)
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiTags('Folders')
   @ApiParam({ name: 'id', type: String })
   async getFolderById(
@@ -80,6 +82,7 @@ export class FoldersController {
   @Post('create')
   @HttpCode(StatusCodes.CREATED)
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiTags('Folders')
   @ApiBody({ required: true, type: CreateFolderDtoClass })
   async createFolder(
@@ -111,6 +114,7 @@ export class FoldersController {
   @Patch('update/:id')
   @HttpCode(StatusCodes.OK)
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiTags('Folders')
   @ApiBody({ required: true, type: UpdateFolderDtoClass })
   @ApiParam({ name: 'id', type: String })
@@ -148,6 +152,7 @@ export class FoldersController {
   @Delete('delete/:id')
   @HttpCode(StatusCodes.OK)
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiTags('Folders')
   @ApiParam({ name: 'id', type: String })
   async deleteFolder(

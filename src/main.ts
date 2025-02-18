@@ -23,9 +23,10 @@ async function bootstrap() {
     .setTitle('Gerenciador de notas')
     .setDescription('API para gerenciamento de notas')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document);
+  SwaggerModule.setup('', app, document);
 
   const PORT = process.env.PORT || 5000;
   await app.listen(PORT);

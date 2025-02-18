@@ -23,7 +23,7 @@ import {
 import { NotesService } from './notes.service';
 import { AuthenticatedRequest } from '../users/interface/users.interface';
 import { StatusCodes } from 'src/infra/error-handler/error-handler.interface';
-import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 
 @Controller('notes')
 export class NotesController {
@@ -32,6 +32,7 @@ export class NotesController {
 
   @Get('')
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @HttpCode(StatusCodes.OK)
   @ApiTags('Notes')
   async getUserNotes(@Req() request: AuthenticatedRequest, @Res() res) {
@@ -54,6 +55,7 @@ export class NotesController {
 
   @Get('/by-id/:noteId')
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @HttpCode(StatusCodes.OK)
   @ApiTags('Notes')
   @ApiParam({ name: 'noteId', type: String })
@@ -82,6 +84,7 @@ export class NotesController {
   @Post('create')
   @HttpCode(StatusCodes.CREATED)
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiTags('Notes')
   @ApiBody({ required: true, type: CreateNoteDtoClass })
   async createNote(
@@ -112,6 +115,7 @@ export class NotesController {
   @Patch('update/:noteId')
   @HttpCode(StatusCodes.OK)
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiTags('Notes')
   @ApiParam({ name: 'noteId', type: String })
   @ApiBody({ required: true, type: UpdateNoteDtoClass })
@@ -149,6 +153,7 @@ export class NotesController {
   @Delete('delete/:noteId')
   @HttpCode(StatusCodes.OK)
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiTags('Notes')
   @ApiParam({ name: 'noteId', type: String })
   async deleteNote(

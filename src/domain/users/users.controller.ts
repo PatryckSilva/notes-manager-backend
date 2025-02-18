@@ -21,7 +21,7 @@ import { JwtAuthGuard } from 'src/guards/jwt-auth-guard.guard';
 import { AuthenticatedRequest } from './interface/users.interface';
 import { StatusCodes } from 'src/infra/error-handler/error-handler.interface';
 import { Request, Response } from 'express';
-import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 
 @Controller('users')
 export class UsersController {
@@ -31,6 +31,7 @@ export class UsersController {
   @Get('')
   @HttpCode(StatusCodes.OK)
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiTags('Users')
   async getUser(@Req() request: AuthenticatedRequest, @Res() res) {
     try {
@@ -52,6 +53,7 @@ export class UsersController {
   @Get('by-email')
   @HttpCode(StatusCodes.OK)
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiTags('Users')
   async getUserByEmail(@Req() request: AuthenticatedRequest, @Res() res) {
     try {
