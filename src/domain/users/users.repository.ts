@@ -16,12 +16,9 @@ export class UsersRepository {
     try {
       const user = await this.prisma.user.create({
         data: {
-          ...data,
-          folders: {
-            create: {
-              name: 'Todas as Notas',
-            },
-          },
+          name: data.name,
+          email: data.email,
+          password: data.password,
         },
       });
 

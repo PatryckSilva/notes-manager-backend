@@ -6,6 +6,7 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { InfraModule } from 'src/infra/infra.module';
 import { ErrorHandlerService } from 'src/infra/error-handler/error-handler.service';
+import { FoldersRepository } from '../folders/folders.repository';
 
 @Module({
   imports: [InfraModule],
@@ -14,6 +15,7 @@ import { ErrorHandlerService } from 'src/infra/error-handler/error-handler.servi
     PrismaService,
     EncryptService,
     UsersRepository,
+    FoldersRepository,
     UsersService,
     ErrorHandlerService,
   ],

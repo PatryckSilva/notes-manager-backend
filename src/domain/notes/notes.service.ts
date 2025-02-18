@@ -29,13 +29,13 @@ export class NotesService {
 
     let createdNote;
 
-    if (!findingFolderById) {
+    if (findingFolderById) {
       createdNote = await this.notesRepository.createNote({
         title,
         content,
-        Folder: {
+        folder: {
           connect: {
-            name: 'Todas as Notas',
+            id: folderId,
           },
         },
         user: {
@@ -46,15 +46,10 @@ export class NotesService {
       });
     }
 
-    if (findingFolderById) {
+    if (!findingFolderById) {
       createdNote = await this.notesRepository.createNote({
         title,
         content,
-        Folder: {
-          connect: {
-            id: folderId,
-          },
-        },
         user: {
           connect: {
             ...user,
@@ -170,7 +165,7 @@ export class NotesService {
       data: {
         title,
         content,
-        Folder: { connect: { id } },
+        folder: { connect: { id } },
       },
       noteId,
       userId: user.id,

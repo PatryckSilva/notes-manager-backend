@@ -9,7 +9,7 @@ datasource db {
 
 model User {
   id        String   @id @default(uuid())
-  name      String
+  name      String?
   email     String   @unique
   password  String
   createdAt DateTime @default(now())
@@ -22,7 +22,7 @@ model User {
 
 model Folder {
   id        String   @id @default(uuid())
-  name      String   @unique
+  name      String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
   notes     Note[]
@@ -38,10 +38,11 @@ model Note {
   content   String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
+  // A nota pode ou não estar em uma pasta:
+  folder    Folder?  @relation(fields: [folderId], references: [id])
+  folderId  String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Folder    Folder?  @relation(fields: [folderId], references: [id])
-  folderId  String?
 
   @@map("notes")
 }
