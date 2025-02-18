@@ -52,3 +52,5 @@
 - Redis;
 - Typescript;
 - Postgres;
+
+Link do deploy: https://notes-manager-backend-rpxp.onrender.com/
