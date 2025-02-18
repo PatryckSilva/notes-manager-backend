@@ -11,11 +11,17 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto, LoginUserDto } from './dto/users.dto';
+import {
+  CreateUserDto,
+  CreateUserDtoClass,
+  LoginUserDto,
+  LoginUserDtoClass,
+} from './dto/users.dto';
 import { JwtAuthGuard } from 'src/guards/jwt-auth-guard.guard';
 import { AuthenticatedRequest } from './interface/users.interface';
 import { StatusCodes } from 'src/infra/error-handler/error-handler.interface';
 import { Request, Response } from 'express';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 
 @Controller('users')
 export class UsersController {
@@ -23,8 +29,9 @@ export class UsersController {
   private usersService: UsersService;
 
   @Get('')
-  @HttpCode(200)
+  @HttpCode(StatusCodes.OK)
   @UseGuards(JwtAuthGuard)
+  @ApiTags('Users')
   async getUser(@Req() request: AuthenticatedRequest, @Res() res) {
     try {
       const user = request.user;
@@ -43,8 +50,9 @@ export class UsersController {
   }
 
   @Get('by-email')
-  @HttpCode(200)
+  @HttpCode(StatusCodes.OK)
   @UseGuards(JwtAuthGuard)
+  @ApiTags('Users')
   async getUserByEmail(@Req() request: AuthenticatedRequest, @Res() res) {
     try {
       const user = request.user;
@@ -63,7 +71,9 @@ export class UsersController {
   }
 
   @Post('create')
-  @HttpCode(201)
+  @HttpCode(StatusCodes.CREATED)
+  @ApiTags('Users')
+  @ApiBody({ required: true, type: CreateUserDtoClass })
   async createUser(@Body() data: CreateUserDto, @Res() res) {
     try {
       const response = await this.usersService.createUser(data);
@@ -81,7 +91,9 @@ export class UsersController {
   }
 
   @Post('login')
-  @HttpCode(200)
+  @HttpCode(StatusCodes.OK)
+  @ApiTags('Users')
+  @ApiBody({ required: true, type: LoginUserDtoClass })
   async login(
     @Req() request: Request,
     @Body() data: LoginUserDto,

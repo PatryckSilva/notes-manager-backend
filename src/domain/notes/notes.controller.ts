@@ -14,10 +14,16 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/guards/jwt-auth-guard.guard';
-import { CreateNoteDto, UpdateNoteDto } from './dto/note.dto';
+import {
+  CreateNoteDto,
+  CreateNoteDtoClass,
+  UpdateNoteDto,
+  UpdateNoteDtoClass,
+} from './dto/note.dto';
 import { NotesService } from './notes.service';
 import { AuthenticatedRequest } from '../users/interface/users.interface';
 import { StatusCodes } from 'src/infra/error-handler/error-handler.interface';
+import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 
 @Controller('notes')
 export class NotesController {
@@ -26,6 +32,8 @@ export class NotesController {
 
   @Get('')
   @UseGuards(JwtAuthGuard)
+  @HttpCode(StatusCodes.OK)
+  @ApiTags('Notes')
   async getUserNotes(@Req() request: AuthenticatedRequest, @Res() res) {
     try {
       const user = request.user;
@@ -46,6 +54,9 @@ export class NotesController {
 
   @Get('/by-id/:noteId')
   @UseGuards(JwtAuthGuard)
+  @HttpCode(StatusCodes.OK)
+  @ApiTags('Notes')
+  @ApiParam({ name: 'noteId', type: String })
   async getNoteById(
     @Req() request: AuthenticatedRequest,
     @Param('noteId') noteId: string,
@@ -69,8 +80,10 @@ export class NotesController {
   }
 
   @Post('create')
-  @HttpCode(201)
+  @HttpCode(StatusCodes.CREATED)
   @UseGuards(JwtAuthGuard)
+  @ApiTags('Notes')
+  @ApiBody({ required: true, type: CreateNoteDtoClass })
   async createNote(
     @Req() request: AuthenticatedRequest,
     @Body() data: CreateNoteDto,
@@ -97,8 +110,11 @@ export class NotesController {
   }
 
   @Patch('update/:noteId')
-  @HttpCode(200)
+  @HttpCode(StatusCodes.OK)
   @UseGuards(JwtAuthGuard)
+  @ApiTags('Notes')
+  @ApiParam({ name: 'noteId', type: String })
+  @ApiBody({ required: true, type: UpdateNoteDtoClass })
   async updateNote(
     @Req() request: AuthenticatedRequest,
     @Param('noteId') noteId: string,
@@ -131,8 +147,10 @@ export class NotesController {
   }
 
   @Delete('delete/:noteId')
-  @HttpCode(204)
+  @HttpCode(StatusCodes.OK)
   @UseGuards(JwtAuthGuard)
+  @ApiTags('Notes')
+  @ApiParam({ name: 'noteId', type: String })
   async deleteNote(
     @Req() request: AuthenticatedRequest,
     @Param('noteId') noteId: string,

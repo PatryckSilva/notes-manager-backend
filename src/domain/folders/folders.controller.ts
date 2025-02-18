@@ -15,9 +15,15 @@ import {
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/guards/jwt-auth-guard.guard';
 import { FoldersService } from './folders.service';
-import { CreateFolderDto, UpdateFolderDto } from './dto/folders.dto';
+import {
+  CreateFolderDto,
+  CreateFolderDtoClass,
+  UpdateFolderDto,
+  UpdateFolderDtoClass,
+} from './dto/folders.dto';
 import { AuthenticatedRequest } from '../users/interface/users.interface';
 import { StatusCodes } from 'src/infra/error-handler/error-handler.interface';
+import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 
 @Controller('folders')
 export class FoldersController {
@@ -27,6 +33,7 @@ export class FoldersController {
   @Get('')
   @HttpCode(StatusCodes.OK)
   @UseGuards(JwtAuthGuard)
+  @ApiTags('Folders')
   async getUserFolders(@Req() request: AuthenticatedRequest, @Res() res) {
     try {
       const user = request.user;
@@ -47,6 +54,8 @@ export class FoldersController {
   @Get('/by-id/:id')
   @HttpCode(StatusCodes.OK)
   @UseGuards(JwtAuthGuard)
+  @ApiTags('Folders')
+  @ApiParam({ name: 'id', type: String })
   async getFolderById(
     @Req() request: AuthenticatedRequest,
     @Param('id') id: string,
@@ -71,6 +80,8 @@ export class FoldersController {
   @Post('create')
   @HttpCode(StatusCodes.CREATED)
   @UseGuards(JwtAuthGuard)
+  @ApiTags('Folders')
+  @ApiBody({ required: true, type: CreateFolderDtoClass })
   async createFolder(
     @Req() request: AuthenticatedRequest,
     @Body() data: CreateFolderDto,
@@ -100,6 +111,9 @@ export class FoldersController {
   @Patch('update/:id')
   @HttpCode(StatusCodes.OK)
   @UseGuards(JwtAuthGuard)
+  @ApiTags('Folders')
+  @ApiBody({ required: true, type: UpdateFolderDtoClass })
+  @ApiParam({ name: 'id', type: String })
   async updateFolder(
     @Req() request: AuthenticatedRequest,
     @Param('id') id: string,
@@ -134,6 +148,8 @@ export class FoldersController {
   @Delete('delete/:id')
   @HttpCode(StatusCodes.OK)
   @UseGuards(JwtAuthGuard)
+  @ApiTags('Folders')
+  @ApiParam({ name: 'id', type: String })
   async deleteFolder(
     @Req() request: AuthenticatedRequest,
     @Param('id') id: string,
