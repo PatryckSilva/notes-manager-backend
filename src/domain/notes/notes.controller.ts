@@ -32,8 +32,6 @@ export class NotesController {
 
       const response = await this.notesService.findUserNotesByUserId(user);
 
-      console.log(`response`, response);
-
       res.status(StatusCodes.OK).send(response);
     } catch (error) {
       throw new HttpException(
@@ -83,6 +81,7 @@ export class NotesController {
       const firstKey = Object.keys(data)[0];
 
       const body = JSON.parse(firstKey);
+      console.log(`body`, body);
       const response = await this.notesService.createNote(user, body);
 
       res.status(StatusCodes.CREATED).send(response);

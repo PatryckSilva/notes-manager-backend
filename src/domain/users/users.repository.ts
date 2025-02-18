@@ -15,7 +15,14 @@ export class UsersRepository {
   async createUser(data: CreateUserProps) {
     try {
       const user = await this.prisma.user.create({
-        data,
+        data: {
+          ...data,
+          folders: {
+            create: {
+              name: 'Todas as Notas',
+            },
+          },
+        },
       });
 
       return user;
