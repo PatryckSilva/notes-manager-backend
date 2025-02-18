@@ -40,8 +40,6 @@ export class NotesController {
 
       const response = await this.notesService.findUserNotesByUserId(user);
 
-      console.log(`response`, response);
-
       res.status(StatusCodes.OK).send(response);
     } catch (error) {
       throw new HttpException(
