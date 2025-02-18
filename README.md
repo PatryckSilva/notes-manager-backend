@@ -13,10 +13,10 @@
 
 2. Rodamos o docker com:
    linux:
-   `sudo docker compose up --d`
+   `sudo docker compose up -d`
 
    windows precisará do docker desktop, e rodar o comando:
-   `docker compose up --d`
+   `docker compose up -d`
 
 3. Após rodar o docker, para rodar o ambiente de desenvolvimento, rodamos o comando:
    `yarn start:dev`
