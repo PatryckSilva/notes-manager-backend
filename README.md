@@ -21,7 +21,7 @@
 3. Após rodar o docker, para rodar o ambiente de desenvolvimento, rodamos o comando:
    `yarn start:dev`
 
-4. Caso queira rodar em produção precisamos buildar o o projeto:
+4. Caso queira rodar em produção precisamos buildar o projeto:
    `yarn build`
 
 5. Para rodar o ambiente de produção, rodamos o comando:
