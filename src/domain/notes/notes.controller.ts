@@ -15,10 +15,10 @@ import {
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/guards/jwt-auth-guard.guard';
 import {
+  ICreateNoteDto,
   CreateNoteDto,
-  CreateNoteDtoClass,
+  IUpdateNoteDto,
   UpdateNoteDto,
-  UpdateNoteDtoClass,
 } from './dto/note.dto';
 import { NotesService } from './notes.service';
 import { AuthenticatedRequest } from '../users/interface/users.interface';
@@ -86,10 +86,10 @@ export class NotesController {
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiTags('Notes')
-  @ApiBody({ required: true, type: CreateNoteDtoClass })
+  @ApiBody({ required: true, type: CreateNoteDto })
   async createNote(
     @Req() request: AuthenticatedRequest,
-    @Body() data: CreateNoteDto,
+    @Body() data: ICreateNoteDto,
     @Res() res,
   ) {
     try {
@@ -118,11 +118,11 @@ export class NotesController {
   @ApiBearerAuth()
   @ApiTags('Notes')
   @ApiParam({ name: 'noteId', type: String })
-  @ApiBody({ required: true, type: UpdateNoteDtoClass })
+  @ApiBody({ required: true, type: UpdateNoteDto })
   async updateNote(
     @Req() request: AuthenticatedRequest,
     @Param('noteId') noteId: string,
-    @Body() data: UpdateNoteDto,
+    @Body() data: IUpdateNoteDto,
     @Res() res,
   ) {
     try {

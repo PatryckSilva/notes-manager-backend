@@ -12,10 +12,10 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import {
+  ICreateUserDto,
   CreateUserDto,
-  CreateUserDtoClass,
+  ILoginUserDto,
   LoginUserDto,
-  LoginUserDtoClass,
 } from './dto/users.dto';
 import { JwtAuthGuard } from 'src/guards/jwt-auth-guard.guard';
 import { AuthenticatedRequest } from './interface/users.interface';
@@ -75,8 +75,8 @@ export class UsersController {
   @Post('create')
   @HttpCode(StatusCodes.CREATED)
   @ApiTags('Users')
-  @ApiBody({ required: true, type: CreateUserDtoClass })
-  async createUser(@Body() data: CreateUserDto, @Res() res) {
+  @ApiBody({ required: true, type: CreateUserDto })
+  async createUser(@Body() data: ICreateUserDto, @Res() res) {
     try {
       const response = await this.usersService.createUser(data);
 
@@ -95,10 +95,10 @@ export class UsersController {
   @Post('login')
   @HttpCode(StatusCodes.OK)
   @ApiTags('Users')
-  @ApiBody({ required: true, type: LoginUserDtoClass })
+  @ApiBody({ required: true, type: LoginUserDto })
   async login(
     @Req() request: Request,
-    @Body() data: LoginUserDto,
+    @Body() data: ILoginUserDto,
     @Res({ passthrough: true }) res: Response,
   ) {
     try {

@@ -16,10 +16,10 @@ import {
 import { JwtAuthGuard } from 'src/guards/jwt-auth-guard.guard';
 import { FoldersService } from './folders.service';
 import {
+  ICreateFolderDto,
   CreateFolderDto,
-  CreateFolderDtoClass,
+  IUpdateFolderDto,
   UpdateFolderDto,
-  UpdateFolderDtoClass,
 } from './dto/folders.dto';
 import { AuthenticatedRequest } from '../users/interface/users.interface';
 import { StatusCodes } from 'src/infra/error-handler/error-handler.interface';
@@ -84,10 +84,10 @@ export class FoldersController {
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiTags('Folders')
-  @ApiBody({ required: true, type: CreateFolderDtoClass })
+  @ApiBody({ required: true, type: CreateFolderDto })
   async createFolder(
     @Req() request: AuthenticatedRequest,
-    @Body() data: CreateFolderDto,
+    @Body() data: ICreateFolderDto,
     @Res() res,
   ) {
     const user = request.user;
@@ -116,12 +116,12 @@ export class FoldersController {
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiTags('Folders')
-  @ApiBody({ required: true, type: UpdateFolderDtoClass })
+  @ApiBody({ required: true, type: UpdateFolderDto })
   @ApiParam({ name: 'id', type: String })
   async updateFolder(
     @Req() request: AuthenticatedRequest,
     @Param('id') id: string,
-    @Body() data: UpdateFolderDto,
+    @Body() data: IUpdateFolderDto,
     @Res() res,
   ) {
     const user = request.user;

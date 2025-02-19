@@ -3,10 +3,9 @@ import { UsersRepository } from './users.repository';
 import { LoginUserProps } from './interface/users.interface';
 import { EncryptService } from 'src/infra/encrypt/encrypt.service';
 import { TokenService } from 'src/infra/token/token.service';
-import { CreateUserDto } from './dto/users.dto';
+import { ICreateUserDto } from './dto/users.dto';
 import { ErrorHandlerService } from 'src/infra/error-handler/error-handler.service';
 import { StatusCodes } from 'src/infra/error-handler/error-handler.interface';
-import { FoldersRepository } from '../folders/folders.repository';
 
 @Injectable()
 export class UsersService {
@@ -18,10 +17,8 @@ export class UsersService {
   private tokenService: TokenService;
   @Inject(ErrorHandlerService)
   private errorHandlerService: ErrorHandlerService;
-  @Inject(FoldersRepository)
-  private foldersRepository: FoldersRepository;
 
-  async createUser(props: CreateUserDto) {
+  async createUser(props: ICreateUserDto) {
     const { name, email, password } = props;
 
     if (!name?.trim() || !email?.trim() || !email?.includes('@')) {

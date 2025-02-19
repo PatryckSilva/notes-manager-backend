@@ -1,13 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-export interface CreateFolderDto {
+export interface ICreateFolderDto {
   name: string;
 }
 
-export interface UpdateFolderDto {
+export interface IUpdateFolderDto {
   name: string;
 }
 
-export class CreateFolderDtoClass {
+export class CreateFolderDto {
   @ApiProperty()
   title: string;
 
@@ -15,7 +15,7 @@ export class CreateFolderDtoClass {
   notes: string;
 }
 
-export class UpdateFolderDtoClass {
+export class UpdateFolderDto {
   @ApiProperty()
   title: string;
 

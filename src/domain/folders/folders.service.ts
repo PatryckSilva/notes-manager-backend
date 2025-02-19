@@ -3,7 +3,7 @@ import { ErrorHandlerService } from 'src/infra/error-handler/error-handler.servi
 import { UserTypes } from '../users/interface/users.interface';
 import { StatusCodes } from 'src/infra/error-handler/error-handler.interface';
 import { FoldersRepository } from './folders.repository';
-import { CreateFolderDto, UpdateFolderDto } from './dto/folders.dto';
+import { ICreateFolderDto, IUpdateFolderDto } from './dto/folders.dto';
 
 export class FoldersService {
   @Inject(FoldersRepository)
@@ -58,7 +58,7 @@ export class FoldersService {
     return folder;
   }
 
-  async createFolder(user: UserTypes, props: CreateFolderDto) {
+  async createFolder(user: UserTypes, props: ICreateFolderDto) {
     const { name } = props;
 
     if (!name) {
@@ -116,7 +116,7 @@ export class FoldersService {
   }: {
     user: UserTypes;
     folderId: string;
-    props: UpdateFolderDto;
+    props: IUpdateFolderDto;
   }) {
     if (!user) {
       this.errorHandlerService.dispatch({

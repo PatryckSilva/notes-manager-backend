@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { NotesRepository } from './notes.repository';
 import { ErrorHandlerService } from 'src/infra/error-handler/error-handler.service';
-import { CreateNoteDto, UpdateNoteDto } from './dto/note.dto';
+import { ICreateNoteDto, IUpdateNoteDto } from './dto/note.dto';
 import { UserTypes } from '../users/interface/users.interface';
 import { StatusCodes } from 'src/infra/error-handler/error-handler.interface';
 import { FoldersRepository } from '../folders/folders.repository';
@@ -13,7 +13,7 @@ export class NotesService {
   @Inject(ErrorHandlerService)
   private errorHandlerService: ErrorHandlerService;
 
-  async createNote(user: UserTypes, props: CreateNoteDto) {
+  async createNote(user: UserTypes, props: ICreateNoteDto) {
     const { content, title, folderId } = props;
 
     if (!user) {
@@ -122,7 +122,7 @@ export class NotesService {
   }: {
     user: UserTypes;
     noteId: string;
-    props: UpdateNoteDto;
+    props: IUpdateNoteDto;
   }) {
     const { content, title, folderId } = props;
 
