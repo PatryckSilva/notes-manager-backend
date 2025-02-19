@@ -10,7 +10,7 @@ export class TokenService {
       { id },
       {
         secret: process.env.JWT_SECRET,
-        expiresIn: '1h', // 1 hour
+        expiresIn: '10 days',
       },
     );
     return jwtToken;
