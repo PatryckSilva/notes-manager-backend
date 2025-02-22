@@ -20,7 +20,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         return {
           store: redisStore as any,
           url: process.env.REDIS_URL,
-          ttl: 120,
         };
       },
     }),

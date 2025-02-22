@@ -54,7 +54,7 @@ export class JwtAuthGuard implements CanActivate {
       throw new UnauthorizedException('user not found');
     }
 
-    await this.cacheService.set(cacheKey, user, 60);
+    await this.cacheService.set(cacheKey, user, { ttl: 60 } as any);
 
     request.user = user;
     return true;
