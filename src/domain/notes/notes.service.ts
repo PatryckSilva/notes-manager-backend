@@ -161,6 +161,8 @@ export class NotesService {
     }
 
     const id = folderId ? folderId : note.folderId;
+    console.log(`noteId`, noteId);
+    console.log(`folderId`, id);
     const updatedNote = await this.notesRepository.updateNoteById({
       data: {
         title,
